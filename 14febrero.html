@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>¿Quieres ser mi 14 de Febrero?</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background: linear-gradient(135deg, #ff5f6d, #ffc371);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .card {
+      background: white;
+      padding: 40px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      max-width: 400px;
+      width: 90%;
+      animation: fadeIn 1.2s ease;
+    }
+
+    img {
+      width: 100%;
+      max-width: 300px;
+      border-radius: 15px;
+      margin: 0 auto 15px auto;
+      display: block;
+    }
+
+    h1 { color: #ff5f6d; }
+    p { font-size: 1.1em; }
+
+    button {
+      margin: 12px;
+      padding: 14px 24px;
+      font-size: 1em;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    #yes { background: #ff5f6d; color: white; }
+    #no { background: #ccc; }
+
+    button:hover { transform: scale(1.08); }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 20px;
+      animation: floatUp 4s linear infinite;
+    }
+
+    @keyframes floatUp {
+      from { transform: translateY(100vh); opacity: 1; }
+      to { transform: translateY(-10vh); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card" id="card">
+    <h1>Hola ❤️</h1>
+    <p>Tengo una pregunta muy importante para ti…</p>
+    <button id="nextBtn">Continuar</button>
+  </div>
+
+  <script>
+    let step = 0;
+    const photos = ['foto1.jpg', 'foto2.jpg', 'foto3.jpg'];
+
+    const card = document.getElementById('card');
+    const nextBtn = document.getElementById('nextBtn');
+
+    nextBtn.addEventListener('click', nextStep);
+
+    function nextStep() {
+      step++;
+
+      if (step === 1) {
+        card.innerHTML = `
+          <img src="${photos[0]}" />
+          <h1>Desde que llegaste…</h1>
+          <p>Mis días son más felices, mis sonrisas más reales 💕</p>
+          <button onclick="nextStep()">Siguiente</button>
+        `;
+      }
+      else if (step === 2) {
+        card.innerHTML = `
+          <img src="${photos[1]}" />
+          <h1>Y por eso…</h1>
+          <p>Quiero preguntarte algo muy especial 😳</p>
+          <button onclick="nextStep()">Dime</button>
+        `;
+      }
+      else if (step === 3) {
+        card.innerHTML = `
+          <img src="${photos[2]}" />
+          <h1>¿Quieres ser mi 14 de Febrero? 💖</h1>
+          <button id="yes" onclick="yesAnswer()">¡Sí!</button>
+          <button id="no" onmouseover="moveNo()">No 😢</button>
+        `;
+      }
+    }
+
+    function yesAnswer() {
+      card.innerHTML = `
+        <h1>¡¡¡SABÍA QUE DIRÍAS QUE SÍ!!! 💘</h1>
+        <p>Prometo que será un día inolvidable ✨</p>
+      `;
+      startHearts();
+    }
+
+    function moveNo() {
+      const noBtn = document.getElementById('no');
+      noBtn.style.position = 'absolute';
+      noBtn.style.left = Math.random() * (window.innerWidth - 120) + 'px';
+      noBtn.style.top = Math.random() * (window.innerHeight - 60) + 'px';
+    }
+
+    function startHearts() {
+      setInterval(() => {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.innerText = '❤️';
+        heart.style.left = Math.random() * window.innerWidth + 'px';
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 4000);
+      }, 300);
+    }
+  </script>
+
+</body>
+</html>
